@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const lotterySchema = new Schema(
   {
     name: String,
-    round: String,
+    round: Number,
     date: String,
     upper3: String,
     below2: String,

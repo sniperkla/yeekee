@@ -75,7 +75,7 @@ app.get("/yeekee", async (req, res) => {
       );
       alldata[i] = {
         name: "หวยยี่กี",
-        round: roundtexts[i].substr(16,2),
+        round: parseInt(roundtexts[i].substr(16,2)),
         date: roundtexts[i].substr(0,8),
         upper3: upper3texts[i],
         below2: lower2texts[i],
