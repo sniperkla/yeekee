@@ -39,7 +39,7 @@ app.get("/yeekee", async (req, res) => {
   //   // Edge executable will return an empty string locally.
   const pathToExtension = "/usr/bin/chromium-browser";
   const browser = await puppeteer.launch({
-    executablePath: pathToExtension,
+    //  executablePath: pathToExtension,
     args: ["--disable-infobars", "--no-sandbox", "--disable-setuid-sandbox"],
     headless: true,
   });
@@ -75,8 +75,8 @@ app.get("/yeekee", async (req, res) => {
       );
       alldata[i] = {
         name: "หวยยี่กี",
-        round: parseInt(roundtexts[i].substr(16,2)),
-        date: roundtexts[i].substr(0,8),
+        round: parseInt(roundtexts[i].substr(16, 2)),
+        date: roundtexts[i].substr(0, 8),
         upper3: upper3texts[i],
         below2: lower2texts[i],
       };
@@ -86,11 +86,13 @@ app.get("/yeekee", async (req, res) => {
     await browser.close();
   }
   try {
-    await Schema.deleteMany({});
-    console.log("All documents deleted");
-    const k = await Schema.create(alldata);
-    console.log(k);
-    res.status(200).send(alldata);
+    if (alldata.length > 1) {
+      await Schema.deleteMany({});
+      console.log("All documents deleted");
+      await Schema.create(alldata);
+      console.log("success");
+      res.status(200).send("success");
+    } else res.status(200).send("fail");
     await browser.close(); // Close the browser instance
   } catch (error) {
     console.error(error);
